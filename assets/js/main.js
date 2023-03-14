@@ -1,19 +1,15 @@
 const localStorageKey = "BOOKS_DATA";
 
 const title = document.querySelector("#inputBookTitle");
-const errorTitle = document.querySelector("#errorTitle");
 const sectionTitle = document.querySelector("#sectionTitle");
 
 const author = document.querySelector("#inputBookAuthor");
-const errorAuthor = document.querySelector("#errorAuthor");
 const sectionAuthor = document.querySelector("#sectionAuthor");
 
 const year = document.querySelector("#inputBookYear");
-const errorYear = document.querySelector("#errorYear");
 const sectionYear = document.querySelector("#sectionYear");
 
 const readed = document.querySelector("#inputBookIsComplete");
-
 const btnSubmit = document.querySelector("#bookSubmit");
 
 const searchValue = document.querySelector("#searchBookTitle");
@@ -31,43 +27,9 @@ window.addEventListener("load", function () {
   }
 });
 
-btnSearch.addEventListener("click", function (e) {
-  e.preventDefault();
-  if (localStorage.getItem(localStorageKey) == null) {
-    return alert("Tidak ada data buku");
-  } else {
-    const getByTitle = getData().filter((a) => a.title == searchValue.value.trim());
-    if (getByTitle.length == 0) {
-      const getByAuthor = getData().filter((a) => a.author == searchValue.value.trim());
-      if (getByAuthor.length == 0) {
-        const getByYear = getData().filter((a) => a.year == searchValue.value.trim());
-        if (getByYear.length == 0) {
-          alert(`Tidak ditemukan data dengan kata kunci: ${searchValue.value}`);
-        } else {
-          showSearchResult(getByYear);
-        }
-      } else {
-        showSearchResult(getByAuthor);
-      }
-    } else {
-      showSearchResult(getByTitle);
-    }
-  }
-
-  searchValue.value = "";
-});
-
 btnSubmit.addEventListener("click", function () {
   if (btnSubmit.value == "") {
     checkInput = [];
-
-    title.classList.remove("error");
-    author.classList.remove("error");
-    year.classList.remove("error");
-
-    errorTitle.classList.add("error-display");
-    errorAuthor.classList.add("error-display");
-    errorYear.classList.add("error-display");
 
     if (title.value == "") {
       checkTitle = false;
@@ -136,15 +98,12 @@ function validation(check) {
     if (a == false) {
       if (i == 0) {
         title.classList.add("error");
-        errorTitle.classList.remove("error-display");
         resultCheck.push(false);
       } else if (i == 1) {
         author.classList.add("error");
-        errorAuthor.classList.remove("error-display");
         resultCheck.push(false);
       } else {
         year.classList.add("error");
-        errorYear.classList.remove("error-display");
         resultCheck.push(false);
       }
     }
@@ -182,53 +141,79 @@ function showData(books = []) {
   books.forEach((book) => {
     if (book.isCompleted == false) {
       let el = `
-            <article class="book_item">
-                <h3>${book.title}</h3>
-                <p>Penulis: ${book.author}</p>
-                <p>Tahun: ${book.year}</p>
+        <article class="book_item">
+          <h3>${book.title}</h3>
+          <p>Penulis: ${book.author}</p>
+          <p>Tahun: ${book.year}</p>
 
-                <div class="action">
-                    <button class="green" onclick="readedBook('${book.id}')">Selesai dibaca</button>
-                    <button class="yellow" onclick="editBook('${book.id}')">Edit Buku</button>
-                    <button class="red" onclick="deleteBook('${book.id}')">Hapus buku</button>
-                </div>
-            </article>
-            `;
+          <div class="action">
+            <button class="success" onclick="readedBook('${book.id}')">Selesai dibaca</button>
+            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
+            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
+          </div>
+        </article>
+        `;
 
       inCompleted.innerHTML += el;
     } else {
       let el = `
-            <article class="book_item">
-                <h3>${book.title}</h3>
-                <p>Penulis: ${book.author}</p>
-                <p>Tahun: ${book.year}</p>
+        <article class="book_item">
+          <h3>${book.title}</h3>
+          <p>Penulis: ${book.author}</p>
+          <p>Tahun: ${book.year}</p>
 
-                <div class="action">
-                    <button class="green" onclick="unreadedBook('${book.id}')">Belum selesai di Baca</button>
-                    <button class="yellow" onclick="editBook('${book.id}')">Edit Buku</button>
-                    <button class="red" onclick="deleteBook('${book.id}')">Hapus buku</button>
-                </div>
-            </article>
-            `;
+          <div class="action">
+            <button class="primary" onclick="unreadedBook('${book.id}')">Belum selesai di Baca</button>
+            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
+            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
+          </div>
+        </article>
+        `;
       completed.innerHTML += el;
     }
   });
 }
 
+// search
+btnSearch.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (localStorage.getItem(localStorageKey) == null) {
+    return alert("Tidak ada buku");
+  } else {
+    const getByTitle = getData().filter((a) => a.title == searchValue.value.trim());
+    if (getByTitle.length == 0) {
+      const getByAuthor = getData().filter((a) => a.author == searchValue.value.trim());
+      if (getByAuthor.length == 0) {
+        const getByYear = getData().filter((a) => a.year == searchValue.value.trim());
+        if (getByYear.length == 0) {
+          alert(`Tidak ditemukan buku dengan kata kunci: ${searchValue.value}`);
+        } else {
+          showSearchResult(getByYear);
+        }
+      } else {
+        showSearchResult(getByAuthor);
+      }
+    } else {
+      showSearchResult(getByTitle);
+    }
+  }
+
+  searchValue.value = "";
+});
+
 function showSearchResult(books) {
   const searchResult = document.querySelector("#searchResult");
-
   searchResult.innerHTML = "";
 
   books.forEach((book) => {
     let el = `
-        <article class="book_item">
-            <h3>${book.title}</h3>
-            <p>Penulis: ${book.author}</p>
-            <p>Tahun: ${book.year}</p>
-            <p>${book.isCompleted ? "Sudah dibaca" : "Belum dibaca"}</p>
-        </article>
-        `;
+      <article class="book_item">
+        <h3>${book.title}</h3>
+        <p>Penulis: ${book.author}</p>
+        <p>Tahun: ${book.year}</p>
+        <p>${book.isCompleted ? "Selesai Dibaca" : "Belum Selesai Dibaca"}</p>
+      </article>
+      `;
 
     searchResult.innerHTML += el;
   });
