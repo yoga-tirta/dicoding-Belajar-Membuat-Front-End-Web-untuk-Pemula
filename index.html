@@ -2,30 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bookshelf Apps</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Bookshelf Apps || YogaTirta</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <header class="head_bar">
-      <h1 class="head_bar__title">Bookshelf Apps</h1>
+    <!-- Header -->
+    <header id="header">
+      <div class="jumbotron">
+        <h1>Bookshelf Apps</h1>
+        <h4>Platform inventaris buku yang efektif karena penyimpanan rak seperti kantong doraemon</h4>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#header">Home</a></li>
+          <li><a href="#input">Input Buku</a></li>
+          <li><a href="#cari">Cari Buku</a></li>
+          <li><a href="#belum">Belum Dibaca</a></li>
+          <li><a href="#sudah">Sudah Dibaca</a></li>
+        </ul>
+      </nav>
     </header>
+
     <main>
-      <section class="input_section">
+      <section class="input_section" id="input">
         <h2>Masukkan Buku Baru</h2>
         <form id="inputBook">
-          <div class="input">
+          <div class="input" id="sectionTitle">
             <label for="inputBookTitle">Judul</label>
             <input id="inputBookTitle" type="text" required />
           </div>
-          <div class="input">
+          <div class="input" id="sectionAuthor">
             <label for="inputBookAuthor">Penulis</label>
             <input id="inputBookAuthor" type="text" required />
           </div>
-          <div class="input">
+          <div class="input" id="sectionYear">
             <label for="inputBookYear">Tahun</label>
             <input id="inputBookYear" type="number" required />
           </div>
@@ -33,12 +49,12 @@
             <label for="inputBookIsComplete">Selesai dibaca</label>
             <input id="inputBookIsComplete" type="checkbox" />
           </div>
-          <button id="bookSubmit" type="submit">Masukkan Buku ke rak <span>Belum selesai dibaca</span></button>
+          <button id="bookSubmit" type="submit">Masukkan Buku</button>
         </form>
       </section>
 
-      <section class="search_section">
-        <h2>Cari Buku (Opsional)</h2>
+      <section class="search_section" id="cari">
+        <h2>Cari Buku</h2>
         <form id="searchBook">
           <label for="searchBookTitle">Judul</label>
           <input id="searchBookTitle" type="text" />
@@ -46,7 +62,7 @@
         </form>
       </section>
 
-      <section class="book_shelf">
+      <section class="book_shelf" id="belum">
         <h2>Belum selesai dibaca</h2>
 
         <div id="incompleteBookshelfList" class="book_list">
@@ -63,7 +79,7 @@
         </div>
       </section>
 
-      <section class="book_shelf">
+      <section class="book_shelf" id="sudah">
         <h2>Selesai dibaca</h2>
 
         <div id="completeBookshelfList" class="book_list">
@@ -80,6 +96,11 @@
         </div>
       </section>
     </main>
+
+    <!-- Footer -->
+    <footer>
+      <p style="text-decoration: none">Copyright © 2023 | Made with ❤️ by <a href="https://yoga-tirta.github.io/">Yoga Tirta Permana</a></p>
+    </footer>
 
     <script src="assets/js/main.js"></script>
   </body>

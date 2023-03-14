@@ -1,12 +1,16 @@
-* {
-  padding: 0;
-  margin: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-body,
-input,
-button {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -15,15 +19,55 @@ button {
   font-size: 16px;
 }
 
-.head_bar {
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: cornflowerblue;
+/* Header */
+header {
+  display: inline;
+  text-align: center;
+}
+
+.jumbotron {
+  font-size: 20px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  background-color: #ff9900;
+}
+
+nav {
+  top: 0;
+  padding: 5px;
+  position: sticky;
+  background-color: #181d31;
+}
+
+nav a {
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
   color: white;
 }
 
+nav a:hover {
+  color: #ff9900;
+}
+
+nav li {
+  display: inline;
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+/* .head_bar {
+  padding: 12px;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  background-color: #ff9900;
+  color: white;
+} */
+
+/* main */
 main {
   max-width: 800px;
   width: 80%;
@@ -41,7 +85,7 @@ main {
 
 .input_section > h2 {
   text-align: center;
-  color: cornflowerblue;
+  color: #ff9900;
 }
 
 .input_section > form > .input {
@@ -49,7 +93,7 @@ main {
 }
 
 .input_section > form > button {
-  background-color: cornflowerblue;
+  background-color: #ff9900;
   color: white;
   border: 0;
   border-radius: 5px;
@@ -71,7 +115,7 @@ main {
 }
 
 .input_section > form > .input > label {
-  color: cornflowerblue;
+  color: #ff9900;
   font-weight: bold;
 }
 
@@ -82,7 +126,7 @@ main {
 }
 
 .input_section > form > .input_inline > label {
-  color: cornflowerblue;
+  color: #ff9900;
   font-weight: bold;
   margin-right: 10px;
 }
@@ -98,7 +142,7 @@ main {
 }
 
 .search_section > h2 {
-  color: cornflowerblue;
+  color: #ff9900;
 }
 
 .search_section > form {
@@ -120,7 +164,7 @@ main {
 }
 
 .search_section > form > button {
-  background-color: cornflowerblue;
+  background-color: #ff9900;
   color: white;
   border: 0;
   border-radius: 5px;
@@ -135,7 +179,7 @@ main {
 }
 
 .book_shelf > h2 {
-  color: cornflowerblue;
+  color: #ff9900;
 }
 
 .book_shelf > .book_list {
@@ -163,11 +207,39 @@ p {
 }
 
 .book_shelf > .book_list > .book_item > .action > .green {
-  background-color: darkgreen;
+  background-color: #198754;
+  color: white;
+}
+
+.book_shelf > .book_list > .book_item > .action > .yellow {
+  background-color: #ffc107;
   color: white;
 }
 
 .book_shelf > .book_list > .book_item > .action > .red {
-  background-color: darkred;
+  background-color: #dc3545;
   color: white;
+}
+
+/* Footer */
+footer {
+  padding: 10px;
+  color: white;
+  background-color: #181d31;
+  text-align: center;
+}
+
+footer p {
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: white;
+}
+
+footer p a {
+  text-decoration: none;
+}
+
+footer p a:hover {
+  color: #ff9900;
 }
