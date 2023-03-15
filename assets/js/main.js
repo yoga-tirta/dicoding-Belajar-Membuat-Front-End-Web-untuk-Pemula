@@ -27,6 +27,7 @@ window.addEventListener("load", function () {
   }
 });
 
+// tambah buku
 btnSubmit.addEventListener("click", function () {
   if (btnSubmit.value == "") {
     checkInput = [];
@@ -93,7 +94,6 @@ btnSubmit.addEventListener("click", function () {
 
 function validation(check) {
   let resultCheck = [];
-
   check.forEach((a, i) => {
     if (a == false) {
       if (i == 0) {
@@ -108,13 +108,11 @@ function validation(check) {
       }
     }
   });
-
   return resultCheck;
 }
 
 function insertData(book) {
   let bookData = [];
-
   if (localStorage.getItem(localStorageKey) === null) {
     localStorage.setItem(localStorageKey, 0);
   } else {
@@ -123,55 +121,11 @@ function insertData(book) {
 
   bookData.unshift(book);
   localStorage.setItem(localStorageKey, JSON.stringify(bookData));
-
   showData(getData());
 }
 
 function getData() {
   return JSON.parse(localStorage.getItem(localStorageKey)) || [];
-}
-
-function showData(books = []) {
-  const inCompleted = document.querySelector("#incompleteBookshelfList");
-  const completed = document.querySelector("#completeBookshelfList");
-
-  inCompleted.innerHTML = "";
-  completed.innerHTML = "";
-
-  books.forEach((book) => {
-    if (book.isCompleted == false) {
-      let el = `
-        <article class="book_item">
-          <h3>${book.title}</h3>
-          <p>Penulis: ${book.author}</p>
-          <p>Tahun: ${book.year}</p>
-
-          <div class="action">
-            <button class="success" onclick="readedBook('${book.id}')">Selesai dibaca</button>
-            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
-            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
-          </div>
-        </article>
-        `;
-
-      inCompleted.innerHTML += el;
-    } else {
-      let el = `
-        <article class="book_item">
-          <h3>${book.title}</h3>
-          <p>Penulis: ${book.author}</p>
-          <p>Tahun: ${book.year}</p>
-
-          <div class="action">
-            <button class="primary" onclick="unreadedBook('${book.id}')">Belum selesai di Baca</button>
-            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
-            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
-          </div>
-        </article>
-        `;
-      completed.innerHTML += el;
-    }
-  });
 }
 
 // search
@@ -197,7 +151,6 @@ btnSearch.addEventListener("click", function (e) {
       showSearchResult(getByTitle);
     }
   }
-
   searchValue.value = "";
 });
 
@@ -211,17 +164,58 @@ function showSearchResult(books) {
         <h3>${book.title}</h3>
         <p>Penulis: ${book.author}</p>
         <p>Tahun: ${book.year}</p>
-        <p>${book.isCompleted ? "Selesai Dibaca" : "Belum Selesai Dibaca"}</p>
+        <p>Status: ${book.isCompleted ? "Selesai Dibaca" : "Belum Selesai Dibaca"}</p>
       </article>
       `;
-
     searchResult.innerHTML += el;
   });
 }
 
+// shelf
+function showData(books = []) {
+  const inCompleted = document.querySelector("#incompleteBookshelfList");
+  const completed = document.querySelector("#completeBookshelfList");
+  inCompleted.innerHTML = "";
+  completed.innerHTML = "";
+
+  books.forEach((book) => {
+    if (book.isCompleted == false) {
+      let el = `
+        <article class="book_item">
+          <h3>${book.title}</h3>
+          <p>Penulis: ${book.author}</p>
+          <p>Tahun: ${book.year}</p>
+
+          <div class="action">
+            <button class="success" onclick="readedBook('${book.id}')">Selesai dibaca</button>
+            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
+            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
+          </div>
+        </article>
+        `;
+      inCompleted.innerHTML += el;
+    } else {
+      let el = `
+        <article class="book_item">
+          <h3>${book.title}</h3>
+          <p>Penulis: ${book.author}</p>
+          <p>Tahun: ${book.year}</p>
+
+          <div class="action">
+            <button class="primary" onclick="unreadedBook('${book.id}')">Belum selesai di Baca</button>
+            <button class="warning" onclick="editBook('${book.id}')">Edit Buku</button>
+            <button class="danger" onclick="deleteBook('${book.id}')">Hapus buku</button>
+          </div>
+        </article>
+        `;
+      completed.innerHTML += el;
+    }
+  });
+}
+
+// pindah
 function readedBook(id) {
   let confirmation = confirm("Pindahkan ke selesai dibaca?");
-
   if (confirmation == true) {
     const bookDataDetail = getData().filter((a) => a.id == id);
     const newBook = {
@@ -234,7 +228,6 @@ function readedBook(id) {
 
     const bookData = getData().filter((a) => a.id != id);
     localStorage.setItem(localStorageKey, JSON.stringify(bookData));
-
     insertData(newBook);
   } else {
     return 0;
@@ -243,7 +236,6 @@ function readedBook(id) {
 
 function unreadedBook(id) {
   let confirmation = confirm("Pindahkan ke belum selesai dibaca?");
-
   if (confirmation == true) {
     const bookDataDetail = getData().filter((a) => a.id == id);
     const newBook = {
@@ -256,27 +248,26 @@ function unreadedBook(id) {
 
     const bookData = getData().filter((a) => a.id != id);
     localStorage.setItem(localStorageKey, JSON.stringify(bookData));
-
     insertData(newBook);
   } else {
     return 0;
   }
 }
 
+// edit
 function editBook(id) {
   const bookDataDetail = getData().filter((a) => a.id == id);
   title.value = bookDataDetail[0].title;
   author.value = bookDataDetail[0].author;
   year.value = bookDataDetail[0].year;
   bookDataDetail[0].isCompleted ? (readed.checked = true) : (readed.checked = false);
-
   btnSubmit.innerHTML = "Edit buku";
   btnSubmit.value = bookDataDetail[0].id;
 }
 
+// delete
 function deleteBook(id) {
   let confirmation = confirm("Yakin akan menghapusnya?");
-
   if (confirmation == true) {
     const bookDataDetail = getData().filter((a) => a.id == id);
     const bookData = getData().filter((a) => a.id != id);
